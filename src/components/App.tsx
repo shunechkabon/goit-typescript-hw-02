@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { Toaster } from 'react-hot-toast';
 import SearchBar from './SearchBar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
@@ -22,6 +22,12 @@ interface Image {
   likes: number;
 }
 
+interface UnsplashResponse {
+  results: Image[];
+  total: number;
+  total_pages: number;
+}
+
 function App() {
   const [images, setImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,7 +41,7 @@ function App() {
     setError(null);
 
     try {
-      const response = await axios.get(
+      const response: AxiosResponse<UnsplashResponse> = await axios.get(
         `https://api.unsplash.com/search/photos?page=${pageNumber}&query=${searchQuery}&client_id=TSbBG3h_a7jQ5jDLzjdT3V7e6o0rgBOzttd6iPuWvEg`
       );
       if (pageNumber === 1) {
