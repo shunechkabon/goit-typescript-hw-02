@@ -1,0 +1,19 @@
+.gallery {
+    padding-top: 100px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    row-gap: 20px;
+}
+
+.gallery li {
+    width: calc((100% - 10px*2) / 3);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.gallery li:hover {
+    transform: scale(1.02);
+}
