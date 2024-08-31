@@ -1,5 +1,20 @@
+import React from 'react';
 import Modal from 'react-modal';
 import s from './ImageModal.module.css';
+
+interface ImageModalProps {
+    image: {
+        urls: {
+            regular: string;
+        };
+        alt_description: string;
+        user: {
+            name: string;
+        };
+        likes: number;
+    };
+    onClose: () => void;
+}
 
 const customStyles = {
     content: {
@@ -21,7 +36,7 @@ const customStyles = {
     }
 };
 
-const ImageModal = ({ image, onClose }) => { 
+const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => { 
     const { urls, alt_description, user, likes } = image;
 
     return (

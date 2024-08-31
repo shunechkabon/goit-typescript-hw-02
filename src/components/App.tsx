@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import SearchBar from './SearchBar/SearchBar';
@@ -8,15 +9,28 @@ import ErrorMessage from './ErrorMessage/ErrorMessage';
 import LoadMoreButton from './LoadMoreBtn/LoadMoreBtn';
 import ImageModal from './ImageModal/ImageModal';
 
-function App() {
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
-  const [query, setQuery] = useState('');
-  const [modalImage, setModalImage] = useState(null);
+interface Image {
+  id: string;
+  urls: {
+    small: string;
+    regular: string;
+  };
+  alt_description: string;
+  user: {
+    name: string;
+  };
+  likes: number;
+}
 
-  const fetchImages = async (searchQuery, pageNumber = 1) => {
+function App() {
+  const [images, setImages] = useState<Image[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(1);
+  const [query, setQuery] = useState<string>('');
+  const [modalImage, setModalImage] = useState<Image | null>(null);
+
+  const fetchImages = async (searchQuery: string, pageNumber: number = 1): Promise<void> => {
     setLoading(true);
     setError(null);
 
@@ -36,7 +50,7 @@ function App() {
     }
   };
 
-  const handleSearchSubmit = (searchQuery) => {
+  const handleSearchSubmit = (searchQuery: string) => {
     setQuery(searchQuery);
     setPage(1);
     fetchImages(searchQuery, 1);
@@ -48,7 +62,7 @@ function App() {
     fetchImages(query, nextPage);
   };
 
-  const openModal = (image) => {
+  const openModal = (image: Image) => {
     setModalImage(image);
   };
 
